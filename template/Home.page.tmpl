@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .home-container {
+            display: flex;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .home-info {
+            text-align: center;
+            margin-right: 2rem;
+        }
+        button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 10px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="home-container">
+        <div class="home-info">
+    <h1>Bienvenue sur Hangman!</h1>
+    <form action="/start" method="post">
+        <label for="difficulty">Choisi la difficulter:</label>
+        <select name="difficulty" id="difficulty">
+            <option value="normal">Normal</option>
+            <option value="hard">Hard</option>
+        </select>
+        <button type="submit">Commencer le jeux</button>
+    </form>
+</body>
+</html>

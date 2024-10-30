@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .game-container {
+            display: flex;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .game-info {
+            text-align: center;
+            margin-right: 2rem;
+        }
+        .hangman-drawing {
+            width: 200px;
+            height: 250px;
+            border: 1px solid #333;
+            position: relative;
+        }
+        .hangman-part {
+            position: absolute;
+            display: none;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-top: 1rem;
+        }
+        input[type="text"] {
+            padding: 5px;
+            margin-right: 5px;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-info">
+            <h1>Hangman Game</h1>
+            <p>Tentative restante : {{.AttemptsRemaining}}</p>
+            <p>Lettres essayer : {{.FalseLetter}}</p>
+            <p>Mot : {{.Display}}</p>
+            
+            {{if .GameOver}}
+                <p>{{.Message}}</p>
+                <a href="/">Jouer encore</a>
+            {{else}}
+                <form action="/play" method="post">
+                    <input type="hidden" name="word" value="{{.Word}}">
+                    <input type="hidden" name="display" value="{{.Display}}">
+                    <input type="hidden" name="attempts" value="{{.AttemptsRemaining}}">
+                    <input type="hidden" name="falseLetter" value="{{.FalseLetter}}">
+                    <label for="guess">Écrit une lettre :</label>
+                    <input type="text" id="guess" name="guess" maxlength="1" required>
+                    <button type="submit">Deviner</button>
+                </form>
+            {{end}}
+        </div>
+        <div class="hangman-drawing">
+            <div class="hangman-part" style="display: {{if le .AttemptsRemaining 5}}block{{else}}none{{end}}"><!-- Base --></div>
+            <div class="hangman-part" style="display: {{if le .AttemptsRemaining 4}}block{{else}}none{{end}}"><!-- Poteau --></div>
+            <div class="hangman-part" style="display: {{if le .AttemptsRemaining 3}}block{{else}}none{{end}}"><!-- Barre horizontale --></div>
+            <div class="hangman-part" style="display: {{if le .AttemptsRemaining 2}}block{{else}}none{{end}}"><!-- Corde --></div>
+            <div class="hangman-part" style="display: {{if le .AttemptsRemaining 1}}block{{else}}none{{end}}"><!-- Tête --></div>
+            <div class="hangman-part" style="display: {{if le .AttemptsRemaining 0}}block{{else}}none{{end}}"><!-- Corps --></div>
+        </div>
+    </div>
+    <script>
+        const hangmanParts = [
+            'M10,230 L190,230', // Base
+            'M30,230 L30,10', // Poteau
+            'M30,10 L150,10', // Barre horizontale
+            'M150,10 L150,50', // Corde
+            'M150,50 C150,30 130,30 130,50 C130,70 150,70 150,50', // Tête
+            'M150,70 L150,150 M150,80 L130,110 M150,80 L170,110 M150,150 L130,190 M150,150 L170,190' // Corps
+        ];
+        
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute('width', '200');
+        svg.setAttribute('height', '250');
+        svg.style.border = '1px solid #333';
+        
+        hangmanParts.forEach((d, i) => {
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path.setAttribute('d', d);
+            path.setAttribute('stroke', 'black');
+            path.setAttribute('stroke-width', '2');
+            path.setAttribute('fill', 'none');
+            path.style.display = document.querySelector(`.hangman-part:nth-child(${i+1})`).style.display;
+            svg.appendChild(path);
+        });
+        
+        document.querySelector('.hangman-drawing').appendChild(svg);
+    </script>
+</body>
+</html>
