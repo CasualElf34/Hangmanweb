@@ -78,6 +78,9 @@ func StartGame(w http.ResponseWriter, r *http.Request) {
         Word:              word,
     }
 
+    if difficulty == "hard" {
+        data.AttemptsRemaining = 10
+    }
     renderTemplate(w, "Game", data)
 }
 
