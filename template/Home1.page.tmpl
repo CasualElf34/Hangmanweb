@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hangman - Le Jeu du Pendu</title>
+    <style>/* Reset CSS pour enlever les marges et paddings par défaut */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #ffffff url('/static/Image/fond2.png') center center/cover no-repeat;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+        }
+        
+        header {
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            letter-spacing: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #FF5733;
+            text-shadow: 2px 2px 5px rgba(255, 87, 51, 0.5);
+        }
+        
+        p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: #ccc;
+            font-weight: lighter;
+        }
+        
+        .game-info {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            color: #bbb;
+        }
+        
+        .game-info ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .game-info ul li {
+            margin: 5px 0;
+        }
+        
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #FF5733;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #c94f27;
+        }
+        
+        /* Animation pour le bouton */
+        button:active {
+            transform: scale(0.98);
+        }</style>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hangman</h1>
+            <p>Le jeu du pendu en ligne - Devinez les lettres et sauvez le bonhomme !</p>
+        </header>
+        
+        <div class="game-info">
+            <h2>Règles du jeu :</h2>
+            <ul>
+                <li>Devinez une lettre à la fois.</li>
+                <li>Si la lettre est correcte, elle apparaît dans le mot.</li>
+                <li>Si vous échouez trop de fois, le bonhomme est pendu !</li>
+            </ul>
+        </div>
+
+        <form action="/start-game" method="post">
+            <label for="difficulty">Choisissez la difficulté :</label>
+            <select name="difficulty" id="difficulty">
+                <option value="normal">Normal</option>
+                <option value="hard">Difficile</option>
+            </select>
+            <button type="submit">Commencer le jeu</button>
+        </form>
+    </div>
+</body>
+</html>
